@@ -64,4 +64,10 @@ public interface ${entity.name}Service {
 #end
 	 */
 	void delete($fn.argumentsListWithType($entity.keyAttributes));
+
+	/**
+	 * 
+	 * @return total entity count
+	 */
+	Long count();
 }
