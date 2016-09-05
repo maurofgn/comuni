@@ -1,0 +1,12 @@
+footer {
+   position:fixed;
+   border-top:1px solid  black;
+   left:0px;
+   bottom:0px;
+   height:50px;
+   width:100%;
+/*    background-color: auto;	 */
+/*    #1ea7ce; */
+   z-index: -1000;
+   padding-left: 15px;
+}

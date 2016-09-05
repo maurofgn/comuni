@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dataset>
+<categorie categoria="Piccoli amici" annomin="3" annomax="5" punti="5" puntimax="5" nrset="1" note="Nota categoria" active="true"/>
+<categorie categoria="Allievi" annomin="6" annomax="7" punti="15" puntimax="15" nrset="2" note="Nota categoria Allievi" active="true"/>
+<categorie categoria="Juniores" annomin="8" annomax="10" punti="15" puntimax="15" nrset="2" note="Nota categoria Juniores" active="true"/>
+<categorie categoria="Senior Maschile" annomin="11" annomax="15" punti="15" puntimax="15" nrset="2" note="Nota categoria Senior M." active="true"/>
+<categorie categoria="Senior Femminile" annomin="15" annomax="15" punti="15" puntimax="15" nrset="2" note="Nota categoria Senior F." active="true"/>
+</dataset>

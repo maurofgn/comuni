@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dataset>
+<provincia provincia_id="1" nome="Torino" sigla="TO" regione_id="1" capoluogo="272"/>
+<provincia provincia_id="2" nome="Vercelli" sigla="VC" regione_id="1" capoluogo="398"/>
+<provincia provincia_id="3" nome="Novara" sigla="NO" regione_id="1" capoluogo="459"/>
+<provincia provincia_id="4" nome="Cuneo" sigla="CN" regione_id="1" capoluogo="567"/>
+<provincia provincia_id="5" nome="Asti" sigla="AT" regione_id="1" capoluogo="744"/>
+<provincia provincia_id="6" nome="Alessandria" sigla="AL" regione_id="1" capoluogo="860"/>
+<provincia provincia_id="7" nome="Biella" sigla="BI" regione_id="1" capoluogo="1051"/>
+<provincia provincia_id="8" nome="Verbano-Cusio-Ossola" sigla="VB" regione_id="1" capoluogo="1197"/>
+<provincia provincia_id="9" nome="Valle d'Aosta" sigla="AO" regione_id="2" capoluogo="1205"/>
+<provincia provincia_id="10" nome="Varese" sigla="VA" regione_id="3" capoluogo="1407"/>
+<provincia provincia_id="11" nome="Como" sigla="CO" regione_id="3" capoluogo="1466"/>
+<provincia provincia_id="12" nome="Sondrio" sigla="SO" regione_id="3" capoluogo="1629"/>
+<provincia provincia_id="13" nome="Milano" sigla="MI" regione_id="3" capoluogo="1718"/>
+<provincia provincia_id="14" nome="Bergamo" sigla="BG" regione_id="3" capoluogo="1804"/>
+<provincia provincia_id="15" nome="Brescia" sigla="BS" regione_id="3" capoluogo="2051"/>
+<provincia provincia_id="16" nome="Pavia" sigla="PV" regione_id="3" capoluogo="2334"/>
+<provincia provincia_id="17" nome="Cremona" sigla="CR" regione_id="3" capoluogo="2452"/>
+<provincia provincia_id="18" nome="Mantova" sigla="MN" regione_id="3" capoluogo="2560"/>
+<provincia provincia_id="19" nome="Lecco" sigla="LC" regione_id="3" capoluogo="2642"/>
+<provincia provincia_id="20" nome="Lodi" sigla="LO" regione_id="3" capoluogo="2719"/>
+<provincia provincia_id="21" nome="Monza e della Brianza" sigla="MB" regione_id="3" capoluogo="2782"/>
+<provincia provincia_id="22" nome="Bolzano" sigla="BZ" regione_id="4" capoluogo="2812"/>
+<provincia provincia_id="23" nome="Trento" sigla="TN" regione_id="4" capoluogo="3066"/>
+<provincia provincia_id="24" nome="Verona" sigla="VR" regione_id="5" capoluogo="3189"/>
+<provincia provincia_id="25" nome="Vicenza" sigla="VI" regione_id="5" capoluogo="3311"/>
+<provincia provincia_id="26" nome="Belluno" sigla="BL" regione_id="5" capoluogo="3323"/>
+<provincia provincia_id="27" nome="Treviso" sigla="TV" regione_id="5" capoluogo="3470"/>
+<provincia provincia_id="28" nome="Venezia" sigla="VE" regione_id="5" capoluogo="3521"/>
+<provincia provincia_id="29" nome="Padova" sigla="PD" regione_id="5" capoluogo="3581"/>
+<provincia provincia_id="30" nome="Rovigo" sigla="RO" regione_id="5" capoluogo="3666"/>
+<provincia provincia_id="31" nome="Udine" sigla="UD" regione_id="6" capoluogo="3802"/>
+<provincia provincia_id="32" nome="Gorizia" sigla="GO" regione_id="6" capoluogo="3819"/>
+<provincia provincia_id="33" nome="Trieste" sigla="TS" regione_id="6" capoluogo="3843"/>
+<provincia provincia_id="34" nome="Pordenone" sigla="PN" regione_id="6" capoluogo="3874"/>
+<provincia provincia_id="35" nome="Imperia" sigla="IM" regione_id="7" capoluogo="3924"/>
+<provincia provincia_id="36" nome="Savona" sigla="SV" regione_id="7" capoluogo="4016"/>
+<provincia provincia_id="37" nome="Genova" sigla="GE" regione_id="7" capoluogo="4054"/>
+<provincia provincia_id="38" nome="La Spezia" sigla="SP" regione_id="7" capoluogo="4111"/>
+<provincia provincia_id="39" nome="Piacenza" sigla="PC" regione_id="8" capoluogo="4160"/>
+<provincia provincia_id="40" nome="Parma" sigla="PR" regione_id="8" capoluogo="4203"/>
+<provincia provincia_id="41" nome="Reggio nell'Emilia" sigla="RE" regione_id="8" capoluogo="4250"/>
+<provincia provincia_id="42" nome="Modena" sigla="MO" regione_id="8" capoluogo="4286"/>
+<provincia provincia_id="43" nome="Bologna" sigla="BO" regione_id="8" capoluogo="4315"/>
+<provincia provincia_id="44" nome="Ferrara" sigla="FE" regione_id="8" capoluogo="4373"/>
+<provincia provincia_id="45" nome="Ravenna" sigla="RA" regione_id="8" capoluogo="4403"/>
+<provincia provincia_id="46" nome="Forlì-Cesena" sigla="FC" regione_id="8" capoluogo="4416"/>
+<provincia provincia_id="47" nome="Rimini" sigla="RN" regione_id="8" capoluogo="4448"/>
+<provincia provincia_id="48" nome="Massa-Carrara" sigla="MS" regione_id="9" capoluogo="4472"/>
+<provincia provincia_id="49" nome="Lucca" sigla="LU" regione_id="9" capoluogo="4494"/>
+<provincia provincia_id="50" nome="Pistoia" sigla="PT" regione_id="9" capoluogo="4526"/>
+<provincia provincia_id="51" nome="Firenze" sigla="FI" regione_id="9" capoluogo="4548"/>
+<provincia provincia_id="52" nome="Livorno" sigla="LI" regione_id="9" capoluogo="4585"/>
+<provincia provincia_id="53" nome="Pisa" sigla="PI" regione_id="9" capoluogo="4618"/>
+<provincia provincia_id="54" nome="Arezzo" sigla="AR" regione_id="9" capoluogo="4635"/>
+<provincia provincia_id="55" nome="Siena" sigla="SI" regione_id="9" capoluogo="4702"/>
+<provincia provincia_id="56" nome="Grosseto" sigla="GR" regione_id="9" capoluogo="4717"/>
+<provincia provincia_id="57" nome="Prato" sigla="PO" regione_id="9" capoluogo="4739"/>
+<provincia provincia_id="58" nome="Perugia" sigla="PG" regione_id="10" capoluogo="4780"/>
+<provincia provincia_id="59" nome="Terni" sigla="TR" regione_id="10" capoluogo="4832"/>
+<provincia provincia_id="60" nome="Pesaro e Urbino" sigla="PU" regione_id="11" capoluogo="4872"/>
+<provincia provincia_id="61" nome="Ancona" sigla="AN" regione_id="11" capoluogo="4894"/>
+<provincia provincia_id="62" nome="Macerata" sigla="MC" regione_id="11" capoluogo="4962"/>
+<provincia provincia_id="63" nome="Ascoli Piceno" sigla="AP" regione_id="11" capoluogo="5001"/>
+<provincia provincia_id="64" nome="Fermo" sigla="FM" regione_id="11" capoluogo="5035"/>
+<provincia provincia_id="65" nome="Viterbo" sigla="VT" regione_id="12" capoluogo="5128"/>
+<provincia provincia_id="66" nome="Rieti" sigla="RI" regione_id="12" capoluogo="5188"/>
+<provincia provincia_id="67" nome="Roma" sigla="RM" regione_id="12" capoluogo="5293"/>
+<provincia provincia_id="68" nome="Latina" sigla="LT" regione_id="12" capoluogo="5334"/>
+<provincia provincia_id="69" nome="Frosinone" sigla="FR" regione_id="12" capoluogo="5394"/>
+<provincia provincia_id="70" nome="L'Aquila" sigla="AQ" regione_id="13" capoluogo="5496"/>
+<provincia provincia_id="71" nome="Teramo" sigla="TE" regione_id="13" capoluogo="5596"/>
+<provincia provincia_id="72" nome="Pescara" sigla="PE" regione_id="13" capoluogo="5630"/>
+<provincia provincia_id="73" nome="Chieti" sigla="CH" regione_id="13" capoluogo="5670"/>
+<provincia provincia_id="74" nome="Campobasso" sigla="CB" regione_id="14" capoluogo="5758"/>
+<provincia provincia_id="75" nome="Isernia" sigla="IS" regione_id="14" capoluogo="5859"/>
+<provincia provincia_id="76" nome="Caserta" sigla="CE" regione_id="15" capoluogo="5910"/>
+<provincia provincia_id="77" nome="Benevento" sigla="BN" regione_id="15" capoluogo="6000"/>
+<provincia provincia_id="78" nome="Napoli" sigla="NA" regione_id="15" capoluogo="6119"/>
+<provincia provincia_id="79" nome="Avellino" sigla="AV" regione_id="15" capoluogo="6170"/>
+<provincia provincia_id="80" nome="Salerno" sigla="SA" regione_id="15" capoluogo="6396"/>
+<provincia provincia_id="81" nome="Foggia" sigla="FG" regione_id="16" capoluogo="6462"/>
+<provincia provincia_id="82" nome="Bari" sigla="BA" regione_id="16" capoluogo="6504"/>
+<provincia provincia_id="83" nome="Taranto" sigla="TA" regione_id="16" capoluogo="6567"/>
+<provincia provincia_id="84" nome="Brindisi" sigla="BR" regione_id="16" capoluogo="6570"/>
+<provincia provincia_id="85" nome="Lecce" sigla="LE" regione_id="16" capoluogo="6624"/>
+<provincia provincia_id="86" nome="Barletta-Andria-Trani" sigla="BT" regione_id="16" capoluogo="6695"/>
+<provincia provincia_id="87" nome="Potenza" sigla="PZ" regione_id="17" capoluogo="6759"/>
+<provincia provincia_id="88" nome="Matera" sigla="MT" regione_id="17" capoluogo="6810"/>
+<provincia provincia_id="89" nome="Cosenza" sigla="CS" regione_id="18" capoluogo="6872"/>
+<provincia provincia_id="90" nome="Catanzaro" sigla="CZ" regione_id="18" capoluogo="6995"/>
+<provincia provincia_id="91" nome="Reggio di Calabria" sigla="RC" regione_id="18" capoluogo="7125"/>
+<provincia provincia_id="92" nome="Crotone" sigla="KR" regione_id="18" capoluogo="7169"/>
+<provincia provincia_id="93" nome="Vibo Valentia" sigla="VV" regione_id="18" capoluogo="7233"/>
+<provincia provincia_id="94" nome="Trapani" sigla="TP" regione_id="19" capoluogo="7257"/>
+<provincia provincia_id="95" nome="Palermo" sigla="PA" regione_id="19" capoluogo="7313"/>
+<provincia provincia_id="96" nome="Messina" sigla="ME" regione_id="19" capoluogo="7390"/>
+<provincia provincia_id="97" nome="Agrigento" sigla="AG" regione_id="19" capoluogo="7451"/>
+<provincia provincia_id="98" nome="Caltanissetta" sigla="CL" regione_id="19" capoluogo="7497"/>
+<provincia provincia_id="99" nome="Enna" sigla="EN" regione_id="19" capoluogo="7524"/>
+<provincia provincia_id="100" nome="Catania" sigla="CT" regione_id="19" capoluogo="7550"/>
+<provincia provincia_id="101" nome="Ragusa" sigla="RG" regione_id="19" capoluogo="7602"/>
+<provincia provincia_id="102" nome="Siracusa" sigla="SR" regione_id="19" capoluogo="7622"/>
+<provincia provincia_id="103" nome="Sassari" sigla="SS" regione_id="20" capoluogo="7674"/>
+<provincia provincia_id="104" nome="Nuoro" sigla="NU" regione_id="20" capoluogo="7718"/>
+<provincia provincia_id="105" nome="Cagliari" sigla="CA" regione_id="20" capoluogo="7750"/>
+<provincia provincia_id="106" nome="Oristano" sigla="OR" regione_id="20" capoluogo="7853"/>
+<provincia provincia_id="107" nome="Olbia-Tempio" sigla="OT" regione_id="20" capoluogo="7928"/>
+<provincia provincia_id="108" nome="Ogliastra" sigla="OG" regione_id="20" capoluogo="7947"/>
+<provincia provincia_id="109" nome="Medio Campidano" sigla="VS" regione_id="20" capoluogo="7977"/>
+<provincia provincia_id="110" nome="Carbonia-Iglesias" sigla="CI" regione_id="20" capoluogo="7989"/>
+</dataset>

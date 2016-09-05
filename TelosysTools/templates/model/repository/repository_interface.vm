@@ -1,0 +1,46 @@
+#if( $entity.hasCompositePrimaryKey() )
+#set( $entityKeyType = ${entity.name} + "EntityKey" )
+#else
+#set( $entityKeyType = ${entity.keyAttributes[0].formattedType(0)} )
+#end
+##--------------------------------------------------------------------------------------------------------
+package ${target.javaPackageFromFolder(${SRC})};
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
+##import org.springframework.data.repository.query.Param;
+import ${ENTITY_PKG}.jpa.${entity.name}Entity;
+#if ( $entity.hasCompositePrimaryKey() )
+import ${ENTITY_PKG}.jpa.${entityKeyType};
+#end
+
+/**
+ * Repository : ${entity.name}.
+ */
+public interface ${entity.name}JpaRepository extends PagingAndSortingRepository<${entity.name}Entity, ${entityKeyType}> {
+
+	/**
+	 * @param pageable
+	 * @return pagina di tutte le città
+	 */
+	@Query(value="select c from ${entity.name}Entity c", countQuery="select count(c) from ${entity.name}Entity c")
+	Page<${entity.name}Entity> listPage(Pageable pageable);
+	
+##	/**
+##	 * @param pageable
+##	 * @param province
+##	 * @param nomeCitta
+##	 * @return pagina di città delle province passate e che soddifano il like sul nome
+##	 */
+##	@Query(value="SELECT c FROM ${entity.name}Entity c "
+##			+ "WHERE c.provincia.provinciaId IN (:province) and LOWER(c.nome) like LOWER(:nome) "
+##			+ "order by c.abitanti desc, c.nome asc"
+##			, countQuery="select count(c) from ${entity.name}Entity c WHERE c.provincia.provinciaId IN (:province) and LOWER(c.nome) like LOWER(:nome)")
+##	Page<ComuneEntity> listPage(Pageable pageable
+##			, @Param("province") List<Integer> province
+##			, @Param("nome") String nomeCitta
+##			);
+
+}

@@ -1,0 +1,45 @@
+env.emailTo=mauro.fugante@gmail.com
+
+#if ( $databases.hasDatabase( $model.databaseId ) )
+#set($database = $databases.getDatabase( $model.databaseId )) 
+database.database=$database.type
+database.databasePlatform=$database.dialect
+database.showSql=true
+database.generateDdl=true
+database.driverClassName=$database.driverClass
+database.url=$database.jdbcUrl
+database.username=$database.user
+database.password=$database.password
+#else
+database.database=
+database.databasePlatform=
+database.showSql=true
+database.generateDdl=true
+database.driverClassName=
+database.url=jdbc\:
+database.username=
+database.password=
+#end
+
+#hibernate.hbm2ddl.auto = create-drop
+hibernate.format_sql = true
+
+#database.database=MYSQL
+#database.databasePlatform=org.hibernate.dialect.MySQLDialect
+#database.showSql=true
+#database.generateDdl=true
+#database.driverClassName=com.mysql.jdbc.Driver
+#database.url=jdbc:mysql://localhost:3306/<DB_NAME>?createDatabaseIfNotExist=true
+#database.username=<USER_NAME>
+#database.password=<PASSWORD>
+	
+#database.database=H2
+#database.databasePlatform=org.hibernate.dialect.H2Dialect
+#database.showSql=true
+#database.generateDdl=true
+#database.driverClassName=org.h2.Driver
+#database.url=jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+#database.username=sa
+#database.password=
+#hibernate.hbm2ddl.auto = create-drop
+#hibernate.format_sql = true

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dataset>
+<regione regione_id="1" nome="Piemonte" nose="Nord_ovest"/>
+<regione regione_id="2" nome="Valle d'Aosta" nose="Nord_ovest"/>
+<regione regione_id="3" nome="Lombardia" nose="Nord_ovest"/>
+<regione regione_id="4" nome="Trentino-Alto Adige" nose="Nord_est"/>
+<regione regione_id="5" nome="Veneto" nose="Nord_est"/>
+<regione regione_id="6" nome="Friuli-Venezia Giulia" nose="Nord_est"/>
+<regione regione_id="7" nome="Liguria" nose="Nord_ovest"/>
+<regione regione_id="8" nome="Emilia-Romagna" nose="Nord_est"/>
+<regione regione_id="9" nome="Toscana" nose="Centro"/>
+<regione regione_id="10" nome="Umbria" nose="Centro"/>
+<regione regione_id="11" nome="Marche" nose="Centro"/>
+<regione regione_id="12" nome="Lazio" nose="Centro"/>
+<regione regione_id="13" nome="Abruzzo" nose="Sud"/>
+<regione regione_id="14" nome="Molise" nose="Sud"/>
+<regione regione_id="15" nome="Campania" nose="Sud"/>
+<regione regione_id="16" nome="Puglia" nose="Sud"/>
+<regione regione_id="17" nome="Basilicata" nose="Sud"/>
+<regione regione_id="18" nome="Calabria" nose="Sud"/>
+<regione regione_id="19" nome="Sicilia" nose="Isole"/>
+<regione regione_id="20" nome="Sardegna" nose="Isole"/>
+</dataset>

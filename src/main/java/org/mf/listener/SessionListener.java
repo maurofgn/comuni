@@ -1,0 +1,32 @@
+package org.mf.listener;
+
+import javax.servlet.ServletContext;
+import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
+
+@WebListener("Session listener for the application")
+public class SessionListener implements HttpSessionListener {
+
+	ServletContext ctx = null;
+    static int total=0, current=0; 
+    
+	@Override
+	public void sessionCreated(HttpSessionEvent se) {
+	    total++;
+	    current++;
+	      
+	    ctx = se.getSession().getServletContext();
+	    ctx.setAttribute("totalusers", total);
+	    ctx.setAttribute("currentusers", current);
+	}
+
+	@Override
+	public void sessionDestroyed(HttpSessionEvent se) {
+		if (ctx != null) {
+			current--;
+	        ctx.setAttribute("currentusers",current);
+		}
+	}
+	
+}

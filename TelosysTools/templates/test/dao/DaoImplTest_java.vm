@@ -1,0 +1,188 @@
+#if( $entity.hasCompositePrimaryKey() )
+#set( $entityKeyType = ${entity.name} + "EntityKey" )
+#else
+#set( $entityKeyType = ${entity.keyAttributes[0].formattedType(0)} )
+#end
+#set($uncapitalizedEntityName = $fn.uncapitalize(${entity.name}) )
+#set( $dataFields = $entity.getAttributesByCriteria( $const.NOT_KEY ) )
+package ${target.javaPackageFromFolder(${TEST_SRC})};
+
+import java.util.List;
+
+import org.dbunit.dataset.CompositeDataSet;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
+import org.junit.Assert;
+import org.junit.Test;
+import ${ENTITY_PKG}.jpa.${entity.name}Entity;
+#if( $entity.hasCompositePrimaryKey() )
+import ${ENTITY_PKG}.jpa.${entity.name}EntityKey;
+#end
+import ${ROOT_PKG}.data.repository.jpa.${entity.name}JpaRepository;
+import ${ROOT_PKG}.mock.${entity.name}EntityMock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
+
+/**
+ * JUnit test case for ${entity.name} Jpa Repository service
+ * 
+ */
+public class ${entity.name}DaoImplTest extends EntityDaoImplTest {
+	
+	@Autowired
+	private ${entity.name}JpaRepository ${uncapitalizedEntityName}JpaRepository;
+	
+//	private MockValues mockValues = new MockValues();
+	
+	${entity.name}EntityMock ${uncapitalizedEntityName}EntityMock = new ${entity.name}EntityMock();
+
+	private static final int MAX_ROW_FOR_PAGE = 20;
+
+	@Override
+	protected String getTableName() {
+		return "${entity.databaseTable}";
+	}
+
+	/* In case you need multiple datasets (mapping different tables) and you do prefer to keep them in separate XML's */
+	@Override
+	protected IDataSet getDataSet() throws Exception {
+		
+		FlatXmlDataSetBuilder flatXmlDataSetBuilder = new FlatXmlDataSetBuilder();
+		
+		/**
+		 * without this flag the columns are defined only from first row,
+		 * therefore columns without value in the first row are not defined
+		 *
+		 */
+		flatXmlDataSetBuilder.setColumnSensing(true);
+		
+		IDataSet[] datasets = new IDataSet[] {
+				flatXmlDataSetBuilder.build(this.getClass().getClassLoader().getResourceAsStream("${uncapitalizedEntityName}.xml"))
+			  };
+
+		CompositeDataSet retValue = new CompositeDataSet(datasets);
+		
+		return retValue;
+	}
+
+	/**
+	 * count the existing records, create a new instance, save, read, re count, delete the record created and check it not exist
+	 */
+	@Test
+	public void findById() {
+
+		long totalCount = ${uncapitalizedEntityName}JpaRepository.count();
+//		System.out.println("Record/s found in ${uncapitalizedEntityName}: " + totalCount);
+
+		${entity.name}Entity mock = ${uncapitalizedEntityName}EntityMock.createNewInstance();
+		mock = ${uncapitalizedEntityName}JpaRepository.save(mock);
+
+#set( $getterKeyList = "" )
+#foreach( $attr in $entity.keyAttributes)
+#set( $getterKeyList = ${getterKeyList} + "#if($foreach.index > 0) ,#end" + "mock.${attr.getter}()" )
+#end
+		${entity.name}Entity ${fn.uncapitalize($entity.name)}Entity = ${fn.uncapitalize($entity.name)}JpaRepository.findOne(${getterKeyList});
+
+		Assert.assertNotNull(${fn.uncapitalize($entity.name)}Entity);
+
+		long c2 = ${uncapitalizedEntityName}JpaRepository.count();
+		Assert.assertEquals("", totalCount+1, c2);
+
+		${uncapitalizedEntityName}JpaRepository.delete(mock);
+
+		${fn.uncapitalize($entity.name)}Entity = ${fn.uncapitalize($entity.name)}JpaRepository.findOne(${getterKeyList});
+
+		Assert.assertNull(${fn.uncapitalize($entity.name)}Entity);
+	}
+
+	@Test
+	public void firstPage() {
+		
+		long totalCount = ${uncapitalizedEntityName}JpaRepository.count();
+
+		PageRequest pageable = new PageRequest(0, MAX_ROW_FOR_PAGE,
+				new Sort(
+#foreach( $field in $dataFields )
+#if($foreach.index == 0) 
+						new Order(Direction.ASC, "$field.name"),
+#end
+#if($foreach.index == 1) 
+						new Order(Direction.DESC, "$field.name")
+#end
+#end
+						)
+		);
+
+		Page<${entity.name}Entity> page = ${uncapitalizedEntityName}JpaRepository.findAll(pageable);
+		Assert.assertTrue(page.getNumberOfElements() <= totalCount && page.getNumberOfElements() <= MAX_ROW_FOR_PAGE);	//elements in page are less or equal of the total
+
+//		int nrRows = 0;
+//		for (${entity.name}Entity ${uncapitalizedEntityName}Entity : page) {
+//			System.out.println(${uncapitalizedEntityName}Entity);
+//			nrRows++;
+//		}
+//		Assert.assertEquals(nrRows, page.getNumberOfElements());
+	}
+
+#set($stringField = "")
+#foreach( $field in $dataFields )
+#if ( $field.type == "String" && $!stringField.isEmpty()  )
+#set ( $stringField = $field.name )
+#end
+#end
+	@Test
+	public void select() {
+		
+		Criteria criteria = getSession().createCriteria(${entity.name}Entity.class, "e")
+				.setMaxResults(MAX_ROW_FOR_PAGE)
+#if ($stringField)
+				.add(Restrictions.ilike("e.${stringField}", addPercentage("n")))
+				.addOrder(org.hibernate.criterion.Order.asc("${stringField}"))
+#end
+				;
+		
+		@SuppressWarnings("unchecked")
+		List<${entity.name}Entity> critList = criteria.list();
+		
+		Assert.assertTrue(critList.size() >= 0 && critList.size() <= MAX_ROW_FOR_PAGE);
+
+//		critList.forEach(c -> System.out.println(c));
+
+
+		Query query = getSession().getNamedQuery("${entity.name}Entity.countAll");
+		long totRec = (Long)query.uniqueResult();
+		Assert.assertTrue(totRec >= 0);
+
+		
+		Query q = getSession().createQuery("Select x from ${entity.name}Entity x order by x.${stringField}");
+		q.setMaxResults(MAX_ROW_FOR_PAGE);
+
+		@SuppressWarnings("unchecked")
+		List<${entity.name}Entity> l = q.list();
+		
+		Assert.assertTrue(l.size() >= 0 && l.size() <= MAX_ROW_FOR_PAGE);
+//		l.forEach(c -> System.out.println(c));
+		
+###if ($stringField)
+##		q = getSession().createQuery("Select x from UserAccountEntity x order by x.firstname");
+###else
+##		q = getSession().createQuery("Select x from UserAccountEntity x");
+###end
+##		
+##		@SuppressWarnings("unchecked")
+##		List<UserAccountEntity> u = q.list();
+##		Assert.assertTrue(u.size() >= 0);
+##		
+##		u.forEach(c -> System.out.println(c));
+##
+##		System.out.println("OK");
+	}
+
+}

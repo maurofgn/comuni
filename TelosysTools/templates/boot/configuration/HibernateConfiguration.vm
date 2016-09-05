@@ -1,0 +1,91 @@
+#set( $D = '$' )
+package ${target.javaPackageFromFolder(${SRC})};
+
+//@Configuration
+//@EnableTransactionManagement
+public class HibernateConfiguration {
+
+#if ( $databases.hasDatabase( $model.databaseId ) )
+#set($database = $databases.getDatabase( $model.databaseId )) 
+
+//	@Value("${D}{jdbc.driverClassName:${database.driverClass}}") 
+//	private String driverClassName;
+//	
+//	@Value("${D}{jdbc.url:${database.jdbcUrl}}") 
+//	private String url;
+//	
+//	@Value("${D}{jdbc.username:${database.user}}") 
+//	private String username;
+//	
+//	@Value("${D}{jdbc.password:${database.password}}") 
+//	private String password;
+//	
+//	@Value("${D}{hibernate.dialect:${database.dialect}}") 
+//	private String dialect;
+#else
+//	@Value("${D}{jdbc.driverClassName:@null}") 
+//	private String driverClassName;
+//	
+//	@Value("${D}{jdbc.url:@null}") 
+//	private String url;
+//	
+//	@Value("${D}{jdbc.username:@null}") 
+//	private String username;
+//	
+//	@Value("${D}{jdbc.password:@null}") 
+//	private String password;
+//	
+//	@Value("${D}{hibernate.dialect:@null}") 
+//	private String dialect;
+#end
+//	
+//	@Value("${D}{hibernate.show_sql:false}") 
+//	private String showSql;
+//	
+//	@Value("${D}{hibernate.format_sql:false}") 
+//	private String formatSql;
+//	
+//	@Value("${D}{hibernate.hbm2ddl.auto:@null}") 
+//	private String hbm2ddlAuto;	//validate | update | create | create-drop 
+//	
+//    @Bean
+//    public LocalSessionFactoryBean sessionFactory() {    	
+//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+//        sessionFactory.setDataSource(dataSource());
+//        sessionFactory.setPackagesToScan(new String[] { "${ROOT_PKG}.bean.jpa" });
+//        sessionFactory.setHibernateProperties(hibernateProperties());
+//        return sessionFactory;
+//     }
+//	
+//    @Bean
+//    public DataSource dataSource() {
+//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        dataSource.setDriverClassName(driverClassName);
+//        dataSource.setUrl(url);
+//        dataSource.setUsername(username);
+//        dataSource.setPassword(password);
+//		
+//        return dataSource;
+//    }
+//
+//    private Properties hibernateProperties() {
+//        Properties properties = new Properties();
+//        properties.put(Environment.DIALECT, dialect);
+//        properties.put(Environment.SHOW_SQL, showSql);
+//        properties.put(Environment.FORMAT_SQL, formatSql);
+//        
+//        if (hbm2ddlAuto != null && !hbm2ddlAuto.isEmpty())
+//        	properties.put(Environment.HBM2DDL_AUTO, hbm2ddlAuto);
+//        
+//        return properties;        
+//    }
+//    
+//	@Bean
+//    @Autowired
+//    public HibernateTransactionManager transactionManager(SessionFactory s) {
+//		HibernateTransactionManager txManager = new HibernateTransactionManager();
+//		txManager.setSessionFactory(s);
+//		return txManager;
+//    }
+}
+

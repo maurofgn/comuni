@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Telosys Database Repository --><root>
+<tableList databaseId="0" databaseName="MYSQL" databaseProductName="MySQL" generation="2016-08-01 11:46:17">
+<table catalog="comuni" databaseType="TABLE" javaBean="Comune" name="comune" schema="">
+<column dbAutoIncremented="true" dbDefaultValue="" dbName="comune_id" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="comuneId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Comune Id" notNull="true" selected="true"/>
+<column dbDefaultValue="" dbName="nome" dbNotNull="false" dbPosition="2" dbSize="80" dbTypeName="VARCHAR" inputType="text" javaName="nome" javaType="java.lang.String" jdbcTypeCode="12" label="Nome" maxLength="80" notNull="false" selected="true"/>
+<column dbDefaultValue="" dbName="codiceCatastale" dbNotNull="false" dbPosition="3" dbSize="4" dbTypeName="VARCHAR" inputType="text" javaName="codicecatastale" javaType="java.lang.String" jdbcTypeCode="12" label="Codicecatastale" maxLength="4" notNull="false" selected="true"/>
+<column dbDefaultValue="" dbName="abitanti" dbNotNull="false" dbPosition="4" dbSize="10" dbTypeName="INT" inputType="number" javaName="abitanti" javaType="java.lang.Integer" jdbcTypeCode="4" label="Abitanti" notNull="false" selected="true"/>
+<column dbDefaultValue="" dbName="capoluogo" dbNotNull="false" dbPosition="5" dbSize="0" dbTypeName="BIT" inputType="checkbox" javaName="capoluogo" javaType="java.lang.Boolean" jdbcTypeCode="-7" label="Capoluogo" notNull="false" selected="true"/>
+<column dbDefaultValue="" dbForeignKey="true" dbName="provincia_id" dbNotNull="false" dbPosition="6" dbSize="10" dbTypeName="INT" inputType="number" javaName="provinciaId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Provincia Id" notNull="false" selected="true"/>
+<fk name="comune_ibfk_1">
+<fkcol colname="provincia_id" colref="provincia_id" deferrable="7" deleterule="0" sequence="1" tablename="comune" tableref="provincia" updaterule="3"/>
+</fk>
+<link cardinality="ManyToOne" cascade="" fetch="DEFAULT" foreignKeyName="comune_ibfk_1" id="LINK_FK_comune_ibfk_1_O" inverseSideOf="" javaName="provincia" javaType="Provincia" joinTableName="" mappedBy="" optional="UNDEFINED" owningSide="true" sourceTableName="comune" targetEntity="Provincia" targetTableName="provincia" used="true">
+<joinColumns>
+<joinColumn insertable="false" name="provincia_id" nullable="true" referencedColumnName="provincia_id" unique="false" updatable="false"/>
+</joinColumns>
+</link>
+</table>
+<table catalog="comuni" databaseType="TABLE" javaBean="Provincia" name="provincia" schema="">
+<column dbAutoIncremented="true" dbDefaultValue="" dbName="provincia_id" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="provinciaId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Provincia Id" notNull="true" selected="true"/>
+<column dbDefaultValue="" dbName="nome" dbNotNull="false" dbPosition="2" dbSize="80" dbTypeName="VARCHAR" inputType="text" javaName="nome" javaType="java.lang.String" jdbcTypeCode="12" label="Nome" maxLength="80" notNull="false" selected="true"/>
+<column dbDefaultValue="" dbName="sigla" dbNotNull="false" dbPosition="3" dbSize="5" dbTypeName="VARCHAR" inputType="text" javaName="sigla" javaType="java.lang.String" jdbcTypeCode="12" label="Sigla" maxLength="5" notNull="false" selected="true"/>
+<column dbDefaultValue="" dbForeignKey="true" dbName="regione_id" dbNotNull="false" dbPosition="4" dbSize="10" dbTypeName="INT" inputType="number" javaName="regioneId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Regione Id" notNull="false" selected="true"/>
+<column dbDefaultValue="" dbName="capoluogo" dbNotNull="false" dbPosition="5" dbSize="10" dbTypeName="INT" inputType="number" javaName="capoluogo" javaType="java.lang.Integer" jdbcTypeCode="4" label="Capoluogo" notNull="false" selected="true"/>
+<fk name="provincia_ibfk_1">
+<fkcol colname="regione_id" colref="regione_id" deferrable="7" deleterule="0" sequence="1" tablename="provincia" tableref="regione" updaterule="3"/>
+</fk>
+<link cardinality="ManyToOne" cascade="" fetch="DEFAULT" foreignKeyName="provincia_ibfk_1" id="LINK_FK_provincia_ibfk_1_O" inverseSideOf="" javaName="regione" javaType="Regione" joinTableName="" mappedBy="" optional="UNDEFINED" owningSide="true" sourceTableName="provincia" targetEntity="Regione" targetTableName="regione" used="true">
+<joinColumns>
+<joinColumn insertable="false" name="regione_id" nullable="true" referencedColumnName="regione_id" unique="false" updatable="false"/>
+</joinColumns>
+</link>
+<link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="comune_ibfk_1" id="LINK_FK_comune_ibfk_1_I" inverseSideOf="LINK_FK_comune_ibfk_1_O" javaName="listOfComune" javaType="java.util.List" joinTableName="" mappedBy="provincia" optional="UNDEFINED" owningSide="false" sourceTableName="provincia" targetEntity="Comune" targetTableName="comune" used="true"/>
+</table>
+<table catalog="comuni" databaseType="TABLE" javaBean="Regione" name="regione" schema="">
+<column dbAutoIncremented="true" dbDefaultValue="" dbName="regione_id" dbNotNull="true" dbPosition="1" dbPrimaryKey="true" dbSize="10" dbTypeName="INT" inputType="number" javaName="regioneId" javaType="java.lang.Integer" jdbcTypeCode="4" label="Regione Id" notNull="true" selected="true"/>
+<column dbDefaultValue="" dbName="nome" dbNotNull="false" dbPosition="2" dbSize="80" dbTypeName="VARCHAR" inputType="text" javaName="nome" javaType="java.lang.String" jdbcTypeCode="12" label="Nome" maxLength="80" notNull="false" selected="true"/>
+<column dbDefaultValue="" dbName="nose" dbNotNull="false" dbPosition="3" dbSize="15" dbTypeName="VARCHAR" inputType="text" javaName="nose" javaType="java.lang.String" jdbcTypeCode="12" label="Nose" maxLength="15" notNull="false" selected="true"/>
+<link cardinality="OneToMany" cascade="" fetch="DEFAULT" foreignKeyName="provincia_ibfk_1" id="LINK_FK_provincia_ibfk_1_I" inverseSideOf="LINK_FK_provincia_ibfk_1_O" javaName="listOfProvincia" javaType="java.util.List" joinTableName="" mappedBy="regione" optional="UNDEFINED" owningSide="false" sourceTableName="regione" targetEntity="Provincia" targetTableName="provincia" used="true"/>
+</table>
+</tableList>
+</root>

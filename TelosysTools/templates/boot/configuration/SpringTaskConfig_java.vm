@@ -1,0 +1,12 @@
+package ${target.javaPackageFromFolder(${SRC})};
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+@Configuration
+@EnableScheduling
+@ComponentScan({ "${ROOT_PKG}.task" })
+public class SpringTaskConfig {
+
+}

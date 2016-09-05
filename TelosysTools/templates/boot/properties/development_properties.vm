@@ -1,0 +1,34 @@
+env.emailTo=mauro.fugante@gmail.com
+
+#if ( $databases.hasDatabase( $model.databaseId ) )
+#set($database = $databases.getDatabase( $model.databaseId )) 
+database.database=$database.type
+database.databasePlatform=$database.dialect
+database.showSql=true
+database.generateDdl=true
+database.driverClassName=$database.driverClass
+database.url=$database.jdbcUrl
+database.username=$database.user
+database.password=$database.password
+#else
+database.database=
+database.databasePlatform=
+database.showSql=true
+database.generateDdl=true
+database.driverClassName=
+database.url=jdbc\:
+database.username=
+database.password=
+#end
+
+#database.database=MYSQL
+#database.databasePlatform=org.hibernate.dialect.MySQLDialect
+#database.showSql=true
+#database.generateDdl=true
+#database.driverClassName=com.mysql.jdbc.Driver
+#database.url=jdbc:mysql://localhost:3306/<DB_NAME>?createDatabaseIfNotExist=true
+#database.username=<USER_NAME>
+#database.password=<PASSWORD>
+
+hibernate.format_sql = true
+hibernate.hbm2ddl.auto = update

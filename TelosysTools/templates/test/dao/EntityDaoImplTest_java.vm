@@ -1,0 +1,71 @@
+package ${target.javaPackageFromFolder(${TEST_SRC})};
+
+import javax.sql.DataSource;
+import javax.transaction.Transactional;
+
+import org.dbunit.database.DatabaseConfig;
+import org.dbunit.database.DatabaseDataSourceConnection;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.operation.DatabaseOperation;
+import org.hibernate.SessionFactory;
+import org.hibernate.Session;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import ${ROOT_PKG}.configuration.JPAConfTest;
+import ${ROOT_PKG}.configuration.ConfigurationTest;
+import ${ROOT_PKG}.utility.DataTypeFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+//@ActiveProfiles("test")
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = { ConfigurationTest.class, JPAConfTest.class })
+@Transactional()
+public abstract class EntityDaoImplTest  {
+
+	@Autowired
+	DataSource dataSource;
+
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	@Before
+	public void setUp() throws Exception {
+		IDatabaseConnection dbConn = new DatabaseDataSourceConnection(dataSource);
+
+		int c = dbConn.getRowCount(getTableName());
+		if (c <= 0) {
+			DatabaseConfig config = dbConn.getConfig();
+			config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new DataTypeFactory());
+			
+			DatabaseOperation.CLEAN_INSERT.execute(dbConn, getDataSet());
+		}
+	}
+	
+	protected abstract IDataSet getDataSet() throws Exception;
+
+	protected abstract String getTableName();
+
+//	protected IDatabaseConnection getConnection() throws Exception {
+//	  IDatabaseConnection connection = new DatabaseConnection(dataSource.getConnection());
+//	  DatabaseConfig config = connection.getConfig();
+//	  config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY, new HsqldbDataTypeFactory());
+//	 
+//	  return connection;
+//	}
+
+	protected Session getSession() {
+		return sessionFactory.getCurrentSession();
+	}
+
+	protected String addPercentage(String value) {
+		return addPercentage(value, true, true);
+	}
+	
+	protected String addPercentage(String value, boolean left, boolean right) {
+		return (left ? "%" : "") + value + (right ? "%" : "");
+	}
+
+}

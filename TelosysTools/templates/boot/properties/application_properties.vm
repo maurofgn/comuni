@@ -1,0 +1,21 @@
+validity.day.psw = 90
+validity.day.psw.before=5
+timeout.day.psw = 180
+max.account.attempt = 5
+gg.range.preno = 30
+psw.min.length = 8
+#psw.reg.exp=^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,30}$
+psw.reg.exp=^(?=\\S+$).{8,30}$
+purge.cron.expression=0 0 5 * * ?
+# http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html
+# |------ seconds (0 - 59)
+# | |------------ min (0 - 59)
+# | | |-------------- hour (0 - 23)
+# | | | |--------------- day of month (1 - 31)
+# | | | | |---------------- month (1 - 12)
+# | | | | | |----------------- day of week (0 - 6) (0 to 6 are Sunday to
+# | | | | | |                  Saturday, or use names; 7 is also Sunday)
+# | | | | | |
+# | | | | | |
+# * * * * * * command to execute
+# 0 * * * * MON-FRI 

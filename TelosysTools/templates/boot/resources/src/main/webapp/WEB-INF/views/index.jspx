@@ -1,0 +1,30 @@
+<div xmlns:s="http://www.springframework.org/tags" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+<jsp:directive.page contentType="text/html;charset=UTF-8" />
+<jsp:output omit-xml-declaration="yes" />
+	<s:message var="app_name" code="application_name" htmlEscape="false" />
+	<s:message var="title" code="welcome_titlepane" arguments="${app_name}" htmlEscape="false" />
+    
+    <div class="container">
+		<h3>
+			<s:message code="welcome_h3" arguments="${app_name}" />
+		</h3>
+      
+		<ul class="entity">
+            <li><a href="categorie">Categorie</a></li>
+            <li><a href="categorieaccept">Categorieaccept</a></li>
+            <li><a href="friend">Friend</a></li>
+            <li><a href="gironi">Gironi</a></li>
+            <li><a href="iscrizioni">Iscrizioni</a></li>
+            <li><a href="match">Match</a></li>
+            <li><a href="passwordresettoken">Passwordresettoken</a></li>
+            <li><a href="privilege">Privilege</a></li>
+            <li><a href="role">Role</a></li>
+            <li><a href="societa">Societa</a></li>
+            <li><a href="team">Team</a></li>
+            <li><a href="torneo">Torneo</a></li>
+            <li><a href="userAccount">UserAccount</a></li>
+            <li><a href="verificationtoken">Verificationtoken</a></li>
+	    </ul>
+
+    </div> <!-- /container -->
+</div>
