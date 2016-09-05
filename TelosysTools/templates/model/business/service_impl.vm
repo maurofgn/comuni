@@ -11,7 +11,7 @@
  */
 package ${target.javaPackageFromFolder(${SRC})};
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import ${ENTITY_PKG}.${entity.name};
@@ -32,6 +32,9 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -85,12 +88,13 @@ public class ${entity.name}ServiceImpl implements ${entity.name}Service {
 
 	@Override
 	public List<${entity.name}> findAll() {
-		Iterable<${entity.name}Entity> entities = ${fn.uncapitalize($entity.name)}JpaRepository.findAll();
-		List<${entity.name}> beans = new ArrayList<${entity.name}>();
-		for(${entity.name}Entity ${fn.uncapitalize($entity.name)}Entity : entities) {
-			beans.add(${fn.uncapitalize($entity.name)}ServiceMapper.map${entity.name}EntityTo${entity.name}(${fn.uncapitalize($entity.name)}Entity));
-		}
-		return beans;
+#if( $entity.hasCompositePrimaryKey() )
+#set( $orderByFieldName = ${entity.name} + "EntityKey" )
+#else
+#set( $orderByFieldName = ${entity.keyAttributes[0].name} )
+#end
+		Sort sort = new Sort(new Order(Direction.ASC, "${orderByFieldName}"));		//TODO: set the appropriate fields for sorting
+		return convert(${fn.uncapitalize($entity.name)}JpaRepository.findAll(sort));
 	}
 
 	@Override
@@ -143,6 +147,11 @@ public class ${entity.name}ServiceImpl implements ${entity.name}Service {
 #end
 	}
 
+	@Override
+	public Long count() {
+		return ${fn.uncapitalize($entity.name)}JpaRepository.count();
+	}
+
 	public ${entity.name}JpaRepository get${entity.name}JpaRepository() {
 		return ${fn.uncapitalize($entity.name)}JpaRepository;
 	}
@@ -157,6 +166,20 @@ public class ${entity.name}ServiceImpl implements ${entity.name}Service {
 
 	public void set${entity.name}ServiceMapper(${entity.name}ServiceMapper ${fn.uncapitalize($entity.name)}ServiceMapper) {
 		this.${fn.uncapitalize($entity.name)}ServiceMapper = ${fn.uncapitalize($entity.name)}ServiceMapper;
+	}
+
+	/**
+	 * convert all elements of entities from ${entity.name}Entity To ${entity.name}
+	 * @param entities
+	 * @return List<${entity.name}>
+	 */
+	private List<${entity.name}> convert(Iterable<${entity.name}Entity> entities) {
+
+		List<${entity.name}> retValue = new LinkedList<${entity.name}>();
+		for(${entity.name}Entity ${fn.uncapitalize($entity.name)}Entity : entities) {
+			retValue.add(${fn.uncapitalize($entity.name)}ServiceMapper.map${entity.name}EntityTo${entity.name}(${fn.uncapitalize($entity.name)}Entity));
+		}
+		return retValue;
 	}
 
 }
