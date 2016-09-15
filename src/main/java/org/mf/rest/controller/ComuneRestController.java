@@ -4,11 +4,17 @@
  */
 package org.mf.rest.controller;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -16,11 +22,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.mf.bean.Comune;
 import org.mf.business.service.ComuneService;
 import org.mf.web.listitem.ComuneListItem;
+import org.mf.web.util.DataTable;
 
 /**
  * Spring MVC controller for 'Comune' management.
@@ -30,6 +38,37 @@ public class ComuneRestController {
 
 	@Resource
 	private ComuneService comuneService;
+	
+	@RequestMapping( value="/comune/page",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	public DataTable<Comune> dataTablePage (
+    		@RequestParam(value="draw",    		required=false, defaultValue = "1") Integer draw,
+    		@RequestParam(value="start",    	required=false, defaultValue = "0") Integer start,
+    		@RequestParam(value="length",    	required=false, defaultValue = DataTable.DEFAULT_LINES_PER_PAGE ) Integer length,
+    		@RequestParam(value="nome", 		required=false) String nome,
+    		@RequestParam(value="provinciaId",  required=false) Integer provinciaId,
+    		@RequestParam(value="regioneId",    required=false) Integer regioneId
+    		) {
+		
+		Sort sort = new Sort(
+				new Order(Direction.ASC, "nome"),
+				new Order(Direction.DESC, "abitanti")
+				);
+		
+		PageRequest pageRequest = new PageRequest(start/length, length, sort);
+		
+		Page<Comune> page = (nome == null || nome.isEmpty()) && regioneId == null && provinciaId == null 
+				? null	//no filter involves no data. At least one filter must be provided
+				: comuneService.findAll(pageRequest, (nome != null && !nome.isEmpty() ? "%"+nome+"%" : null ), regioneId, provinciaId);
+		
+		Long totRec = page != null ? page.getTotalElements() : comuneService.count();
+		
+		DataTable<Comune> dataTable = new DataTable<Comune>(totRec, (page != null ? page.getContent().size() : 0),  (page != null ? page.getContent() : Collections.emptyList()), draw);
+		return dataTable;
+	}
 	
 	@RequestMapping( value="/items/comune",
 			method = RequestMethod.GET,
@@ -45,7 +84,7 @@ public class ComuneRestController {
 		return items;
 	}
 	
-	@RequestMapping( value="/comune",
+	@RequestMapping( value="/comune/listAll",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)

@@ -28,7 +28,6 @@ import org.mf.web.common.MessageType;
 //--- List Items 
 import org.mf.web.listitem.ProvinciaListItem;
 import org.mf.web.listitem.RegioneListItem;
-import org.mf.web.util.DataTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,7 +39,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -61,6 +59,8 @@ public class ComuneController extends AbstractController {
 	private static final String JSP_SEARCH = "comune/search";
 	private static final String JSP_FORM   = "comune/form";
 	private static final String JSP_LIST   = "comune/list";
+	private static final String JSP_PAGE   = "comune/page";
+	
 
 	//--- SAVE ACTION ( in the HTML form )
 	private static final String SAVE_ACTION_CREATE   = "/comune/create";
@@ -166,7 +166,7 @@ public class ComuneController extends AbstractController {
 	}
 	
 	/**
-	 * Shows a page with the occurrences of Comune found in the database
+	 * Shows a page with a page of occurrences of Comune found in the database 
 	 * @param pageable
 	 * @param model
 	 * @return
@@ -181,53 +181,70 @@ public class ComuneController extends AbstractController {
 	    return JSP_LIST;
 	}
 	
-	@RequestMapping(value="/comunePage", produces="text/html")
-	public String listPage() {
+	/**
+	 * Shows a page with the occurrences of Comune found in the database
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/page", produces="text/html")
+	public String listPage(Model model) {
 		log("Action 'list page'");
-	    return "comune/listPage";
+		populateListOfProvinciaItems(model);
+		populateListOfRegioneItems(model);
+	    return JSP_PAGE;
 	}
 	
-	@RequestMapping( value="/comunePageJson", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-	@ResponseBody
-	public DataTable<Comune> records(
-			HttpServletRequest request,
-    		@RequestParam(value="nome", 		required=false) String nome,
-    		@RequestParam(value="provinciaId",  required=false) Integer provinciaId,
-    		@RequestParam(value="regioneId",    required=false) Integer regioneId
-    		) {
-		
-		log("Action 'list'");
-		
-		Integer draw = getPara(request, "draw", 1);			//valore da ritornare x permettere la syncro;
-		Long totRec = comuneService.count();
-		List<Comune> list = comuneService.findAll(nome, provinciaId, regioneId);
-
-		DataTable<Comune> dataTable = new DataTable<Comune>(totRec, list.size(), list, draw);
-		return dataTable;
-	}
+//	@RequestMapping( value="/comune/page", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseStatus(HttpStatus.OK)
+//	@ResponseBody
+//	public DataTable<Comune> dataTablePage (
+//			HttpServletRequest request,
+//    		@RequestParam(value="draw",    		required=false, defaultValue = "1") Integer draw,
+//    		@RequestParam(value="start",    	required=false, defaultValue = "0") Integer start,
+//    		@RequestParam(value="length",    	required=false, defaultValue = "10") Integer length,
+//    		@RequestParam(value="nome", 		required=false) String nome,
+//    		@RequestParam(value="provinciaId",  required=false) Integer provinciaId,
+//    		@RequestParam(value="regioneId",    required=false) Integer regioneId
+//    		) {
+//		
+//		Sort sort = new Sort(
+//				new Order(Direction.ASC, "nome"),
+//				new Order(Direction.DESC, "abitanti")
+//				);
+//		
+//		PageRequest pageRequest = new PageRequest(start/length, length, sort);
+//		
+//		Page<Comune> page = (nome == null || nome.isEmpty()) && regioneId == null && provinciaId == null 
+//				? null	//no filter involves no data. At least one filter must be provided
+//				: comuneService.findAll(pageRequest, (nome != null && !nome.isEmpty() ? "%"+nome+"%" : null ), regioneId, provinciaId);
+//		
+//		Long totRec = page != null ? page.getTotalElements() : comuneService.count();
+//		
+//		DataTable<Comune> dataTable = new DataTable<Comune>(totRec, (page != null ? page.getContent().size() : 0),  (page != null ? page.getContent() : Collections.emptyList()), draw);
+//		return dataTable;
+//	}
 	
 //	private Pageable getPageable(HttpServletRequest request) {
 //		int pageNo = getPara(request, "page", 0);
 //		int size = getPara(request, "size", 10);
 //		
 //		ColumnsDataTable columnsDataTable = new ColumnsDataTable(request);
-//		Sort sort = new Sort(columnsDataTable.getOrder());
+//		Sort sort = (columnsDataTable.getOrder());
 //		
 //		return new PageRequest(pageNo, size, sort);
 //	}
 	
-	private Integer getPara(HttpServletRequest request, String paraKey, Integer defaultValue) {
-		String p = request.getParameter(paraKey);
-		Integer retValue = defaultValue;
-		try {
-			retValue = Integer.parseInt(p);
-		} catch (NumberFormatException e) {
-			retValue = defaultValue;
-		}
-		
-		return retValue;
-	}
+//	private Integer getPara(HttpServletRequest request, String paraKey, Integer defaultValue) {
+//		String p = request.getParameter(paraKey);
+//		Integer retValue = defaultValue;
+//		try {
+//			retValue = Integer.parseInt(p);
+//		} catch (NumberFormatException e) {
+//			retValue = defaultValue;
+//		}
+//		
+//		return retValue;
+//	}
 	
 	/**
 	 * Shows a form page in order to create a new Comune

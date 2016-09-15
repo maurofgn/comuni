@@ -62,6 +62,19 @@ public interface ComuneJpaRepository extends PagingAndSortingRepository<ComuneEn
 	
 //	Nel caso di un collection type, non è possibile usare IS NULL ma JPQL fornisce gli operatori IS EMPTY o IS NOT EMPTY. 
 	
+	@Query(value="SELECT c FROM ComuneEntity as c "
+			+ "WHERE (LOWER(c.nome) like LOWER(:nome) or :nome is null) "
+			+ "and (c.provincia.provinciaId = (:provincia) or (:provincia) is null) "
+			+ "and (c.provincia.regione.regioneId = (:regione) or (:regione) is Null) "
+			+ "order by c.nome"
+			,
+			countQuery="select count(c) from ComuneEntity c " 
+					+ "WHERE (LOWER(c.nome) like LOWER(:nome) or :nome is null) "
+					+ "and (c.provincia.provinciaId = (:provincia) or (:provincia) is null) "
+					+ "and (c.provincia.regione.regioneId = (:regione) or (:regione) is Null) "
+			)
+	Page<ComuneEntity> retrieveByProvRegion(Pageable pageable, @Param("regione") Integer regione, @Param("provincia") Integer provincia, @Param("nome") String nomeCitta);
+	
 
 	/**
 	 * 
@@ -115,12 +128,4 @@ public interface ComuneJpaRepository extends PagingAndSortingRepository<ComuneEn
 			+ "order by c.nome")
 	List<ComuneEntity> retrieveByNose(@Param("none") Nose nose, @Param("nome") String nomeCitta);
 	
-	@Query("SELECT c FROM ComuneEntity as c "
-			+ "WHERE LOWER(c.nome) like LOWER(:nome) "
-			+ "and (c.provincia.provinciaId = (:provincia) or (:provincia) is null) "
-			+ "and (c.provincia.regione.regioneId = (:regione) or (:regione) is Null) "
-			+ "order by c.nome")
-	List<ComuneEntity> retrieveByProvRegion(@Param("regione") Integer regione, @Param("provincia") Integer provincia, @Param("nome") String nomeCitta);
-
-		
 }

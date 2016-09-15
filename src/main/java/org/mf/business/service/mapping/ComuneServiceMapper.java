@@ -45,6 +45,7 @@ public class ComuneServiceMapper extends AbstractServiceMapper {
 		//--- Link mapping ( link to Provincia )
 		if(comuneEntity.getProvincia() != null) {
 			comune.setProvinciaId(comuneEntity.getProvincia().getProvinciaId());
+			comune.setSiglaProv(comuneEntity.getProvincia().getSigla());
 		}
 		return comune;
 	}

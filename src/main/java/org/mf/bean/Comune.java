@@ -36,6 +36,7 @@ public class Comune implements Serializable {
 
 
     private Integer provinciaId;
+    private String siglaProv;
 
 	public Comune() {
 	}
@@ -107,6 +108,11 @@ public class Comune implements Serializable {
 //        sb.append(comuneId);
 //        sb.append("|");
         sb.append(nome);
+        if (siglaProv != null && !siglaProv.isEmpty()) {
+	        sb.append(" (");
+	        sb.append(siglaProv);
+	        sb.append(")");
+        }
 //        sb.append("|");
 //        sb.append(codicecatastale);
 //        sb.append("|");
@@ -116,6 +122,14 @@ public class Comune implements Serializable {
 //        sb.append("|");
 //        sb.append(provinciaId);
         return sb.toString(); 
-    } 
+    }
+
+	public void setSiglaProv(String siglaProv) {
+		this.siglaProv = siglaProv;
+	}
+
+	public String getSiglaProv() {
+		return siglaProv;
+	}
 
 }

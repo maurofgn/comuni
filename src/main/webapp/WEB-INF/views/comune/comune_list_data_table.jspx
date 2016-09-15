@@ -16,7 +16,7 @@
 
 <style type="text/css">
 
-#tbodyLogs td {
+#list_data_body td {
 	padding-top: 0;
 	padding-bottom: 0;
 };
@@ -25,44 +25,11 @@
 
 <script type='text/javascript'>
 
-//Plug-in to fetch page data 
-jQuery.fn.dataTableExt.oApi.fnPagingInfo = function ( oSettings )
-{
-	return {
-		"iStart":         oSettings._iDisplayStart,
-		"iEnd":           oSettings.fnDisplayEnd(),
-		"iLength":        oSettings._iDisplayLength,
-		"iTotal":         oSettings.fnRecordsTotal(),
-		"iFilteredTotal": oSettings.fnRecordsDisplay(),
-		"iPage":          oSettings._iDisplayLength === -1 ? 0 : Math.ceil( oSettings._iDisplayStart / oSettings._iDisplayLength ),
-		"iTotalPages":    oSettings._iDisplayLength === -1 ? 0 : Math.ceil( oSettings.fnRecordsDisplay() / oSettings._iDisplayLength )
-	};
-};
-
 $(document).ready(function() {
 	
-	  $( "#comune_nome" ).autocomplete({
-	      source: function( request, response ) {
-	        $.ajax({
-	          url: "${contextPath}/comune/autoCompleteName",
-	          dataType: "json",
-	          data: {term: request.term, regione: $("#regioni").val(), provincia: $("#province").val()},
-	          success: function( data ) {
-	        	  response(data);
-	        	  $('#comuneId').val("");
-	        	}
-	        });
-	      },
-	      minLength: 3,
-	      select: function( event, ui ) {	        
-	        $('#comuneId').val(ui.item.id);
-	      }
-	    });
-	  
 	    $("#regioni").change(function () {
 	    	
 	        $("#comune_nome").val("");
-	        $('#comuneId').val("");
 	    	
 	        if ($(this).data('province') == undefined) {
 	            $(this).data('province', $('select.switchable option').clone());	//salva in data('province') tutte le option delle select con classe switchable
@@ -76,34 +43,28 @@ $(document).ready(function() {
 	        });
 	    });
 	  
-	  	//sul cambio del valore del componente regioni, definisce le options delle select condizionate da regione
-	    $("#province").change(function () {
-	        $("#comune_nome").val("");
-	        $('#comuneId').val("");
-	    });
-	  	
-	    //fire change once to display the correct elements
-	    $('#regioni').trigger('change')	
 
-	tableData = $("#list_data").DataTable( {
- 		"lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
-        "processing": true,
-        "serverSide": true,
-        "bFilter": false,		//senza input x search
-        //bStateSave variable you can use to save state on client cookies: set value "true" 
-        "bStateSave": false,
-        //Default: Page display length
-        "iDisplayLength": 10,
-        //We will use below variable to track page number on server side(For more information visit: http://legacy.datatables.net/usage/options#iDisplayStart)
-        "iDisplayStart": 0,
-        "scrollY":        "280px",
-        "scrollCollapse": true,
-        "fnDrawCallback": function () {
-            //Get page numer on client. Please note: number start from 0 So
-            //for the first page you will see 0 second page 1 third page 2...
-            //Un-comment below alert to see page number
-        	alert("Current page number: "+this.fnPagingInfo().iPage);
-        },
+	    datatable = $("#list_data").DataTable( {
+	    	
+	 		"lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+	        "processing": false,
+	        "serverSide": true,
+	        "bSort": false,
+	        "bFilter": false,		//senza input x search
+	        //bStateSave variable you can use to save state on client cookies: set value "true" 
+	        "bStateSave": false,
+	        //Default: Page display length
+	        "iDisplayLength": 10,
+	        //We will use below variable to track page number on server side(For more information visit: http://legacy.datatables.net/usage/options#iDisplayStart)
+	        "iDisplayStart": 0,
+	        "scrollY": "280px",
+	        "scrollCollapse": true,
+	        //"fnDrawCallback": function () {
+	            //Get page numer on client. Please note: number start from 0 So
+	            //for the first page you will see 0 second page 1 third page 2...
+	            //Un-comment below alert to see page number
+	        	//alert("Current page number: "+this.fnPagingInfo().iPage);
+	        //},
         "language": {
             "lengthMenu": "Mostra _MENU_ righe per pagina",
             "zeroRecords": "Nessun valore da visualizzare",
@@ -125,61 +86,115 @@ $(document).ready(function() {
         },
         "ajax": 
         	{
-            url : "comunePageJson",
-            type: "GET" 				// This is the default value, could also be POST
-             ,data: function(d) {
-                	d.nome = $('#comune_nome').val();
-                	d.provinciaId = $('#province').val(ui.item.id);
-                	d.regioneId = $('#regioni').val(ui.item.id);
-                }
+            url : "comune/page",
+            dataType: "json",
+            type: "GET", 				// This is the default value, could also be POST
+            beforeSend: function (msg) {
+                console.log("2-sending...");
+            },
+            data: function(d) {
+//                 	d.nome = $('#comune_nome').val();
+//                  	d.provinciaId = $('#regioni').val() ? $('#province').val() : null;
+//                  	d.regioneId = $('#regioni').val();
+                },
         	},
         "columns": [
    				{ "mData": "comuneId" },
    				{ "mData": "nome" },
 				{ "mData": "codicecatastale" },
 				{ "mData": "abitanti" },
-				{ "mData": "capoluogo" }
+				{ "mData": "capoluogo" },
         			],
         "order": [[ 1, 'asc' ], [ 3, 'desc' ]]
     } );
 	    
-	$('#comune_nome').on('change keyup paste', 
+	$('#comune_nome').on('change paste',
 		function () {
-			if ($('#comune_nome').val().length >= 3)
-				tableData.ajax.reload();
+			datatable.ajax.reload();
 		}
 	);
+	
+  	//sul cambio del valore del componente regioni, definisce le options delle select condizionate da regione
+    $("#province").change(function () {
+        $("#comune_nome").val("");
+    });
+  	
+    //fire change once to display the correct elements
+    $('#regioni').trigger('change')
 
 });
 	
 </script>
 
 
-	<div class="container">
-		<fieldset class="col-sm-12 bordure">
-			<legend class="legende"><s:message code="comune"/></legend>
+  <div class="container">
+	<legend class="legende"><s:message code="comune"/></legend>
+
+	<util:message message="${message}" messages="${messages}" />
+	
+	<div class="params" style=" display: flex; margin: auto; position: relative; width: 100%; ">
+	
+		<!-- DATA FIELD : regioneId -->
+		<div style="margin: auto; position: relative; width: 100%; ">
+			<!-- The field label is defined in the messages file (for i18n) -->
+			<label for="provincia_regioneId" class="control-label"><s:message code="provincia.regioneId"/></label>
+			<div>
+			<select id="regioni" name="regioneId" class="x-large">
+				<option value="">(select)</option>
+			    <c:forEach var="item" items="${listOfRegioneItems}">
+			        <option value="${item.value}">${item.label}</option>
+			    </c:forEach>
+			</select>
+			</div>
+		</div>				
+
+		<!-- DATA FIELD : provinciaId -->
+		<div style="margin: auto; position: relative; width: 100%; ">
+			<!-- The field label is defined in the messages file (for i18n) -->
+			<label for="province" class="col-sm-2 control-label"><s:message code="comune.provinciaId"/></label>
+			<div>
+			
+			<select id="province" name="provinciaId" class="x-large switchable">
+			    <c:forEach var="item" items="${listOfProvinciaItems}">
+			        <option value="${item.value}" class="provinciaId_${item.regioneId}">${item.label}</option>
+			    </c:forEach>
+			</select>
+			
+			</div>
+		</div>
 		
-			<util:message message="${message}" messages="${messages}" />
-			
-			<div id="result_list" >
-			
-				<table id='list_data' class="table table-hover" style="width:100%">
-				    <thead>
-				      <tr>
-							<th><s:message code="comune.comuneId"/></th>
-							<th><s:message code="comune.nome"/></th>
-							<th><s:message code="comune.codicecatastale"/></th>
-							<th><s:message code="comune.abitanti"/></th>
-							<th><s:message code="comune.capoluogo"/></th>
-							<s:url var="url_create" value="/comune/form"  />
-							<th><a class="btn-info btn-xs" href='${url_create}'><s:message code="create"/></a></th>
-				      </tr>
-				    </thead>
-				    <tbody id = "list_data_body" >
-				    </tbody>
-			  	</table>
-		  	</div>
-		  	
-		</fieldset>
+		<!-- DATA FIELD : nome -->
+		<div  style="margin: auto; position: relative; width: 100%; ">
+			<!-- The field label is defined in the messages file (for i18n) -->
+			<label for="comune_nome" class="control-label"><s:message code="comune.nome"/></label>
+			<div>
+				<input type="text" id="comune_nome" name="nome" maxLength="80" autocomplete="off" />
+			</div>
+		</div>
+	
 	</div>
+	
+	<div id="result_list" >
+	
+		<table id='list_data' class="table table-hover" style="width:100%">
+		    <thead>
+		      <tr>
+				<th><s:message code="comune.comuneId"/></th>
+				<th><s:message code="comune.nome"/></th>
+				<th><s:message code="comune.codicecatastale"/></th>
+				<th><s:message code="comune.abitanti"/></th>
+				<th><s:message code="comune.capoluogo"/></th>
+		      </tr>
+		    </thead>
+		    <tbody id = "list_data_body" >
+		    </tbody>
+	  	</table>
+	  	
+		<s:url var="url_create" value="/comune/form"  />
+		<a class="btn-info btn-xs" href='${url_create}'><s:message code="create"/></a>
+	  	
+  	</div>
+	  	
+  </div>
+
 </div>

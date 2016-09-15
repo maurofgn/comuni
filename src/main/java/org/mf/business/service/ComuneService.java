@@ -9,6 +9,7 @@ import java.util.List;
 import org.mf.bean.Comune;
 import org.mf.util.AutoCompleteData;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 /**
@@ -69,8 +70,20 @@ public interface ComuneService {
 	 */
 	List<AutoCompleteData> autoCompleteName(String term, Integer regione, Integer provincia);
 
+	/**
+	 * 
+	 * @return total records in table
+	 */
 	Long count();
 
-	List<Comune> findAll(String nome, Integer provinciaId, Integer regioneId);
+	/**
+	 * 
+	 * @param pageRequest
+	 * @param nome
+	 * @param provinciaId
+	 * @param regioneId
+	 * @return
+	 */
+	Page<Comune> findAll(PageRequest pageRequest, String nome, Integer provinciaId, Integer regioneId);
 
 }

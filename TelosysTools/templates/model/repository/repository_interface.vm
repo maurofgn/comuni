@@ -23,7 +23,7 @@ public interface ${entity.name}JpaRepository extends PagingAndSortingRepository<
 
 	/**
 	 * @param pageable
-	 * @return pagina di tutte le città
+	 * @return
 	 */
 	@Query(value="select c from ${entity.name}Entity c", countQuery="select count(c) from ${entity.name}Entity c")
 	Page<${entity.name}Entity> listPage(Pageable pageable);

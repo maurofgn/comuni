@@ -113,7 +113,7 @@ public class ComuneServiceImpl implements ComuneService {
 	@Override
 	public List<AutoCompleteData> autoCompleteName(String term, Integer regione, Integer provincia) {
 
-		Iterable<ComuneEntity> entities = comuneJpaRepository.retrieveByProvRegion(regione, provincia, term);
+		Iterable<ComuneEntity> entities = comuneJpaRepository.retrieveByProvRegion(null, regione, provincia, term);
 
 		List<AutoCompleteData> items = new LinkedList<AutoCompleteData>();
 		for(ComuneEntity comuneEntity : entities) {
@@ -123,8 +123,18 @@ public class ComuneServiceImpl implements ComuneService {
 	}
 	
 	@Override
-	public List<Comune> findAll(String term, Integer regione, Integer provincia) {
-		return convertList(comuneJpaRepository.retrieveByProvRegion(regione, provincia, term));
+	public Page<Comune> findAll(PageRequest pageRequest, String term, Integer regione, Integer provincia) {
+		
+		Page<ComuneEntity> pageEntity = comuneJpaRepository.retrieveByProvRegion(pageRequest, regione, provincia, term);
+		
+		Page<Comune> page = pageEntity.map(new Converter<ComuneEntity, Comune>() {
+			@Override
+			public Comune convert(ComuneEntity comuneEntity) {
+				return comuneServiceMapper.mapComuneEntityToComune(comuneEntity);
+			}
+		});
+
+		return page;
 	}
 	
 	/**

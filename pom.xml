@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.mf</groupId>
-	<artifactId>buildTemplates</artifactId>
+	<artifactId>comuni</artifactId>
 	<version>0.1</version>
 	<packaging>war</packaging>
-	<name>buildTemplates</name>
-	<description>buildTemplates</description>
+	<name>comuni</name>
+	<description>comuni</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

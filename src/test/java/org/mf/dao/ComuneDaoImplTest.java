@@ -11,10 +11,13 @@ import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mf.bean.Comune;
 import org.mf.bean.jpa.ComuneEntity;
+import org.mf.business.service.mapping.ComuneServiceMapper;
 import org.mf.data.repository.jpa.ComuneJpaRepository;
 import org.mf.mock.ComuneEntityMock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -29,6 +32,10 @@ public class ComuneDaoImplTest extends EntityDaoImplTest {
 	
 	@Autowired
 	private ComuneJpaRepository comuneJpaRepository;
+	
+	@Autowired
+	private ComuneServiceMapper comuneServiceMapper;
+
 	
 //	private MockValues mockValues = new MockValues();
 	
@@ -94,7 +101,9 @@ public class ComuneDaoImplTest extends EntityDaoImplTest {
 		
 		long totalCount = comuneJpaRepository.count();
 
-		PageRequest pageable = new PageRequest(0, MAX_ROW_FOR_PAGE,
+		PageRequest pageable = new PageRequest(
+				1,	//0 based
+				MAX_ROW_FOR_PAGE,
 				new Sort(
 						new Order(Direction.ASC, "nome"),
 						new Order(Direction.DESC, "codicecatastale")
@@ -145,10 +154,29 @@ public class ComuneDaoImplTest extends EntityDaoImplTest {
 	public void testJpa() {
 		Integer regioneId = 11;
 		Integer provinciaId = null;	//62;
-		List<ComuneEntity> result = comuneJpaRepository.retrieveByProvRegion(regioneId, provinciaId, "%mac%");
+		PageRequest pageable = new PageRequest(
+				1,	//0 based
+				MAX_ROW_FOR_PAGE,
+				new Sort(
+						new Order(Direction.ASC, "nome"),
+						new Order(Direction.DESC, "abitanti")
+						)
+		);
+
+		Page<ComuneEntity> pageEntity = comuneJpaRepository.retrieveByProvRegion(pageable, regioneId, provinciaId, "%i%");
 		
-		result.forEach(x -> System.out.println(x.toString()));
-		Assert.assertTrue(result.size() > 0);
+		pageEntity.forEach(x -> System.out.println(x.toString()));
+		Assert.assertTrue(pageEntity.getTotalElements() > 0);
+		
+		Page<Comune> page = pageEntity.map(new Converter<ComuneEntity, Comune>() {
+			@Override
+			public Comune convert(ComuneEntity comuneEntity) {
+				return comuneServiceMapper.mapComuneEntityToComune(comuneEntity);
+			}
+		});
+
+		page.forEach(x -> System.out.println(x.toString()));
+		Assert.assertTrue(page.getTotalElements() > 0);
 	}
 
 	@Test

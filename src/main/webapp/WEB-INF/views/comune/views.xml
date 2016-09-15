@@ -13,8 +13,7 @@
 	<definition extends="default" name="comune/search">
 		<put-attribute name="body" value="/WEB-INF/views/comune/comune_search.jspx" />
 	</definition>
-	
-	<definition extends="default" name="comune/listPage">
+	<definition extends="default" name="comune/page">
 		<put-attribute name="body" value="/WEB-INF/views/comune/comune_list_data_table.jspx" />
 	</definition>
 	
